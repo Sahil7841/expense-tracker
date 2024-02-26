@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"; 
 import styled from "styled-components"; 
-import AddTransaction from "./AddTransaction"; 
-import OverviewComponent from "./OverviewComponent"; 
-import TransactionsContainer from "./TransactionsContainer"; 
+import AddTransaction from "./AddBuget"; 
+import OverviewComponent from "./Overview"; 
+import TransactionsContainer from "./Transactions"; 
 
 const Container = styled.div` 
 display: flex; 
@@ -31,16 +31,9 @@ gap: 20px;
 margin-bottom: 25px; 
 `; 
 
-const THeading = styled.div` 
-font-size: 30px; 
-font-weight: bold; 
-text-align: center; 
-margin-bottom: 20px; 
-color: #44E610; 
-`; 
 
 const ExpenseBox = styled.div` 
-flex: 1; 
+flex: 1;
 border: 1px solid #000; 
 border-radius: 5px; 
 padding: 10px 20px; 
@@ -49,7 +42,6 @@ background-color: #fff;
 	font-weight: bold; 
 	font-size: 25px; 
 	display: block; 
-	color: ${(props) => (props.isExpense ? "red" : "green")}; 
 } 
 `; 
 
@@ -93,7 +85,6 @@ useEffect(() => {
 
 return ( 
 	<Container> 
-		<THeading>GeeksforGeeks</THeading> 
 	<Heading>Expense Tracker</Heading> 
 	<OverviewComponent 
 		toggle={toggle} 

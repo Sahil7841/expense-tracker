@@ -64,7 +64,6 @@ const AddTransactionData = () => {
 return ( 
 	<Container> 
 	<Input 
-		type={"number"} 
 		placeholder="Enter Amount"
 		value={amount} 
 		onChange={(e) => setAmount(e.target.value)} 
