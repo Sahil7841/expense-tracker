@@ -13,7 +13,7 @@ font-weight: 600;
 const TransactionItems = styled.div``; 
 
 const TransactionsContainer = ({ transactions, removeTransaction }) => { 
-const [searchInput, setSearchInput] = useState(""); 
+const [searchInput] = useState(""); 
 const [filteredTransactions, setFilteredTransactions] = useState(transactions); 
 
 const filteredData = (searchInput) => { 
