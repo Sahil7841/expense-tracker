@@ -1,27 +1,48 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 const AddTransaction = ({ setToggle, AddTransactions }) => {
   const [amount, setAmount] = useState("");
   const [details, setDetails] = useState("");
   const [transType, setTransType] = useState("expense");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleAmountChange = (e) => {
+    const enteredValue = e.target.value;
+
+    const regex = /^[0-9]*$/;
+
+    if (regex.test(enteredValue) || enteredValue === "") {
+      setAmount(enteredValue);
+    }
+  };
 
   const handleAddTransaction = () => {
+    if (amount.trim() === "" || details.trim() === "") {
+      setErrorMessage("Please enter both amount and details.");
+      return;
+    }
+
     AddTransactions({
       amount: Number(amount),
       details,
       transType,
       id: Date.now(),
     });
+
+    setErrorMessage("");
+
     setToggle();
   };
 
   return (
     <div className="container">
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+
       <input
         className="input"
         placeholder="Enter Amount"
         value={amount}
-        onChange={(e) => setAmount(e.target.value)}
+        onChange={handleAmountChange}
       />
 
       <input
