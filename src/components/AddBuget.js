@@ -4,7 +4,8 @@ const AddTransaction = ({ setToggle, AddTransactions }) => {
   const [amount, setAmount] = useState("");
   const [details, setDetails] = useState("");
   const [transType, setTransType] = useState("expense");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [amountError, setAmountError] = useState("");
+  const [detailsError, setDetailsError] = useState("");
 
   const handleAmountChange = (e) => {
     const enteredValue = e.target.value;
@@ -13,12 +14,33 @@ const AddTransaction = ({ setToggle, AddTransactions }) => {
 
     if (regex.test(enteredValue) || enteredValue === "") {
       setAmount(enteredValue);
+      setAmountError("");
+    } else {
+      setAmountError("Please enter only numeric values for amount.");
+    }
+  };
+
+  const handleDetailsChange = (e) => {
+    const enteredValue = e.target.value;
+
+    const regex = /^[A-Za-z ]*$/;
+
+    if (regex.test(enteredValue) || enteredValue === "") {
+      setDetails(enteredValue);
+      setDetailsError("");
+    } else {
+      setDetailsError("Please enter only alphabets for details.");
     }
   };
 
   const handleAddTransaction = () => {
-    if (amount.trim() === "" || details.trim() === "") {
-      setErrorMessage("Please enter both amount and details.");
+    if (amount.trim() === "") {
+      setAmountError("Please enter the amount.");
+      return;
+    }
+
+    if (details.trim() === "") {
+      setDetailsError("Please enter the details.");
       return;
     }
 
@@ -29,29 +51,38 @@ const AddTransaction = ({ setToggle, AddTransactions }) => {
       id: Date.now(),
     });
 
-    setErrorMessage("");
+    setAmountError("");
+    setDetailsError("");
 
     setToggle();
   };
 
   return (
     <div className="container">
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
       <input
         className="input"
         placeholder="Enter Amount"
         value={amount}
         onChange={handleAmountChange}
       />
+      {amountError && (
+        <div className="error-message" style={{ color: "red" }}>
+          {amountError}
+        </div>
+      )}
 
       <input
         className="input"
-        type={"text"}
+        type="text"
         placeholder="Enter Details"
         value={details}
-        onChange={(e) => setDetails(e.target.value)}
+        onChange={handleDetailsChange}
       />
+      {detailsError && (
+        <div className="error-message" style={{ color: "red" }}>
+          {detailsError}
+        </div>
+      )}
 
       <div className="radio-container">
         <div className="radio-btn">
@@ -59,7 +90,7 @@ const AddTransaction = ({ setToggle, AddTransactions }) => {
             type="radio"
             id="expense"
             name="type"
-            value={"expense"}
+            value="expense"
             checked={transType === "expense"}
             onChange={(e) => setTransType(e.target.value)}
           />
@@ -73,7 +104,7 @@ const AddTransaction = ({ setToggle, AddTransactions }) => {
             type="radio"
             id="income"
             name="type"
-            value={"income"}
+            value="income"
             checked={transType === "income"}
             onChange={(e) => setTransType(e.target.value)}
           />
